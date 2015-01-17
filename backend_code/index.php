@@ -2,12 +2,23 @@
 
 require_once dirname(__FILE__) . "/utilities.php";
 
+$counter = 0;
+while (isset($_POST[$counter]))
+{
+    echo $_POST[$counter];
+    $counter += 1;
+}
+
+echo "NUM PARAMS: ".$counter;
+
+
 if (POSTAttributesPresent('userToken')) {
     $userToken = $_POST['userToken'];
 
     // ROUTE REQUEST TO getTrackedItems()
-    //getTrackedItems($userToken);
-    getTrackedItemsDemo($userToken);
+    getTrackedItems($userToken);
+
+    // getTrackedItemsDemo($userToken);
 }
 else if (POSTAttributesPresent('userToken', 'category', 'description', 'notificationMethod', 'url')) {
     $userToken = $_POST['userToken'];

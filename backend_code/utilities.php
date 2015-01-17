@@ -11,7 +11,6 @@ function connectDB() {
     {
         $m = new MongoClient(); // connect
         $db = $m->selectDB("test");
-        echo "SUCCESS!";
     }
     catch ( MongoConnectionException $e )
     {
