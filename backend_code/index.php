@@ -12,7 +12,7 @@ require_once dirname(__FILE__) . "/utilities.php";
 $values = $_POST;
 $count = count($values);
 
-echo "NUM PARAMS: ".$counter;
+echo "NUM PARAMS: ".$count;
 
 
 if (POSTAttributesPresent('userToken')) {
