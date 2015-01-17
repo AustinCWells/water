@@ -7,16 +7,17 @@ connectDB();
  * Function to connect to a MongoDB database.
  */
 function connectDB() {
-//    try
-//    {
-//        $m = new MongoClient(); // connect
-//        $db = $m->selectDB("test");
-//    }
-//    catch ( MongoConnectionException $e )
-//    {
-//        echo "\nCouldn't connect to mongodb, is the 'mongo' process running?\n\n";
-//        exit();
-//    }
+    try
+    {
+        $m = new MongoClient(); // connect
+        $db = $m->selectDB("test");
+        echo "SUCCESS!";
+    }
+    catch ( MongoConnectionException $e )
+    {
+        echo "\nCouldn't connect to mongodb, is the 'mongo' process running?\n\n";
+        exit();
+    }
 }
 
 /**
