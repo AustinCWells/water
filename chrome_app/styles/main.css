@@ -1,0 +1,65 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-image: url("../kimono.jpg");
+  margin: 0;
+  background-size:100% 100%;
+  padding: 0;
+}
+
+h1 {
+  position: absolute;
+  bottom: 20px;
+  text-align: center;
+  width: 100%;
+  line-height: 120%;
+  font-family: Arial, sans-serif;
+  color: white;
+  letter-spacing: -0.05em;
+}
+
+.notification{
+  position:relative;
+  width:80%;
+  height:80%;
+  margin-left: 10%;
+  margin-right: 10%; 
+  margin-top: 10%;
+  color:white;
+  background-color: white;
+  box-shadow: 0px 0px 107px 21px rgba(0, 0, 0, 1);
+  border-radius: 15px;
+}
+
+.item{
+  height: 80px;
+  border-bottom: solid  rgb(137, 137, 150) 1.5px;
+}
+
+.type{
+  height:inherit;
+  width:75px;
+  background-color: #5EC9B9;
+}
+
+.notification .item:first-child .type{
+  border-top-left-radius: 15px;
+}
+
+.close{
+  position:absolute; 
+  right:5px;
+  top:10px;
+  color:black;
+}
+
+.blue{
+ background-color: #5EC9B9;
+}
+.orange{
+  background-color: #FF946E;
+}
