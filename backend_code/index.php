@@ -6,7 +6,8 @@ if (POSTAttributesPresent('userToken')) {
     $userToken = $_POST['userToken'];
 
     // ROUTE REQUEST TO getTrackedItems()
-    getTrackedItems($userToken);
+    //getTrackedItems($userToken);
+    getTrackedItemsDemo($userToken);
 }
 else if (POSTAttributesPresent('userToken', 'category', 'description', 'notificationMethod', 'url')) {
     $userToken = $_POST['userToken'];
