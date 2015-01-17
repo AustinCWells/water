@@ -2,12 +2,15 @@
 
 require_once dirname(__FILE__) . "/utilities.php";
 
-$counter = 0;
-while (isset($_POST[$counter]))
-{
-    echo $_POST[$counter];
-    $counter += 1;
-}
+//$counter = 0;
+//while (isset($_POST[$counter]))
+//{
+//    echo $_POST[$counter];
+//    $counter += 1;
+//}
+
+$values = $_POST;
+$count = count($values);
 
 echo "NUM PARAMS: ".$counter;
 
