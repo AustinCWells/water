@@ -7,7 +7,7 @@
 <html>
   <head>
     <title>Getting Started Extension's Popup</title> 
-    <link href="./assets/styles/main.css" rel="stylesheet">
+    <link href="./assets/css/main.css" rel="stylesheet">
     
 
     <!--
@@ -19,12 +19,11 @@
     <script src="popup.js"></script> 
   </head>
   <body>
-  <div class="background">
     <div class="message notification">
-    
+        <img src="./laptop.png" alt="laptop" class="displayImage" >
+        <h1>Select item to track!</h1>
     </div>  
     <div class="message formOptions">
-      <h1>water</h1>
       <span class="currentUrl" hidden></span>
       <select name="frequency" id="frequency">
         <option value="once">ONCE</option>
@@ -42,7 +41,6 @@
       <span>What are you tracking?</span>
       <input type="text">
     </div>
-</div>
 
   </body>
 </html>
