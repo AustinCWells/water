@@ -21,6 +21,10 @@ if ($numArgs == 1) {
         removeTrackedItem($_POST['itemNum']);
     }
 }
+else if (POSTAttributesPresent('itemNum', 'setAlert'))
+{
+    itemChanged($_POST['itemNum'], $_POST['setAlert']);
+}
 else if (POSTAttributesPresent('userToken', 'description', 'notificationMethod', 'url', 'recurrence')) {
     $userToken = $_POST['userToken'];
     $description = $_POST['description'];
@@ -53,7 +57,8 @@ function getTrackedItems($userToken) {
 
 
 /**
- * Function that accepts a series of parameters and adds a new item to the DB
+ * Function that accepts a series of parameters and adds a new item to the DB, returns
+ * information for the item that was just added.
  *
  * @param $userToken - User token created by Google authentication
  * @param $description - Description of what is being tracked
@@ -65,11 +70,13 @@ function addTrackedItem($userToken, $description, $notificationMethod, $url, $re
     global $items;
 
     $newItem = array('userToken' => $userToken, 'description' => $description,
-        'notificationMethod' => $notificationMethod, 'url' => $url, 'recurrence' => $recurrence);
+        'notificationMethod' => $notificationMethod, 'url' => $url, 'recurrence' => $recurrence, 'alert' => false);
     $items->insert($newItem);
 
+    $addedItem = $items->find(array('description' => $description));
+
     echo "\nItem Added: \n";
-    echo json_encode($newItem);
+    echo json_encode(iterator_to_array($addedItem));
 }
 
 
@@ -85,6 +92,34 @@ function removeTrackedItem($itemNum) {
 
     echo "\nItem Removed";
 }
+
+
+/**
+ * @param $itemNum - Unique identifier (primary key) for an individual item
+ * @param $setAlert - boolean value indicating whether the alert flag should be set
+ */
+function itemChanged($itemNum, $setAlert) {
+    global $items;
+
+    $items->update(array('_id' => new MongoId($itemNum)), array('$set' => array('alert' => $setAlert)));
+
+    if ($setAlert === true)
+        echo "\nALERT ACTIVE\n";
+    else
+        echo "\nALERT CLEARED\n";
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
