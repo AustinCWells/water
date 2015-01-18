@@ -2,6 +2,13 @@
 	display:none;
 }
 
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
 body{
   background-position: center center;
   background-repeat: no-repeat;
