@@ -8,6 +8,7 @@ var frequency = "";
 var notificationType = "";
 var theDescription = ""; 
 var theUserToken = "MHacksMagicJankUserToken";
+var jobToken = "";
 
 console.log("send message");
 chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
@@ -23,7 +24,10 @@ function timeout() {
         	lastElement = first; 
         	timeout();
         } else {
-        	alert("different");
+        	$.get( "https://104.236.120.63/water/backend_code", {
+				itemNum: jobToken,
+				setAlert: "true"
+			});
         	// notify spence
         	if(!notifyOnce) {
         		lastElement = first; 
@@ -41,6 +45,9 @@ chrome.runtime.onMessage.addListener(
                 "from the extension");
     if (request.greeting == "hello"){
     	frequency = request.frequency;
+    	if(frequency === "once"){
+    		notifyOnce = true;
+    	}
     	notificationType = request.notificationType;
     	theDescription = request.descriptionType; 
 
@@ -62,7 +69,7 @@ chrome.runtime.onMessage.addListener(
 				url: document.URL,
 				recurrence:frequency
 			}).done(function( data ) {
-    			alert( "Data Loaded: " + data );
+    			jobToken = Object.keys(JSON.parse(data))[0];
   			});
 
 			$(document).unbind();
