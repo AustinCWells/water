@@ -14,7 +14,7 @@ catch ( MongoConnectionException $e )
 
 // CREATE COLLECTION VARIABLES
 $items = new MongoCollection($db, 'items');     // Items Collection
-$users = new MongoCollection($db, 'users');     // Users Collection
+//$notifications = new MongoCollection($db, 'notifications');     // Users Collection
 
 
 
@@ -47,3 +47,13 @@ function POSTAttributesPresent() {
     return attributesPresent($_POST, func_get_args());      // Check args in POST against test args passed to THIS function
 }
 
+/**
+ * Function to determine whether GET arguments exist.
+ *
+ * @return bool - Represents whether arguments passed to it are
+ * identical to those included within the first parameter
+ */
+function GETAttributesPresent() {
+// func_get_args is an array of the args passed to THIS function
+    return attributesPresent($_GET, func_get_args());      // Check args in POST against test args passed to THIS function
+}

@@ -2,31 +2,39 @@
 
 require_once dirname(__FILE__) . "/utilities.php";
 
-$args = $_POST;
+$args = $_GET;
 $numArgs = count($args);
 
 
 if ($numArgs == 1) {
-    if(POSTAttributesPresent('userToken'))
+    if(GETAttributesPresent('userToken'))
     {
-        $userToken = $_POST['userToken'];
+        $userToken = $_GET['userToken'];
 
         // ROUTE REQUEST TO getTrackedItems()
         getTrackedItems($userToken);
 
         // getTrackedItemsDemo($userToken);
     }
-    else if (POSTAttributesPresent('itemNum'))
+    else if (GETAttributesPresent('itemNum'))
     {
-        removeTrackedItem($_POST['itemNum']);
+        removeTrackedItem($_GET['itemNum']);
     }
 }
-else if (POSTAttributesPresent('userToken', 'description', 'notificationMethod', 'url', 'recurrence')) {
-    $userToken = $_POST['userToken'];
-    $description = $_POST['description'];
-    $notificationMethod = $_POST['notificationMethod'];
-    $url = $_POST['url'];
-    $recurrence = $_POST['recurrence'];
+else if (GETAttributesPresent('itemNum', 'setAlert'))
+{
+    itemChanged($_GET['itemNum'], $_GET['setAlert']);
+}
+else if (GETAttributesPresent('itemNum', 'success'))
+{
+    notificationSuccess($_GET['itemNum']);
+}
+else if (GETAttributesPresent('userToken', 'description', 'notificationMethod', 'url', 'recurrence')) {
+    $userToken = $_GET['userToken'];
+    $description = $_GET['description'];
+    $notificationMethod = $_GET['notificationMethod'];
+    $url = $_GET['url'];
+    $recurrence = $_GET['recurrence'];
 
     // ROUTE REQUEST TO addTrackedItem()
     addTrackedItem($userToken, $description, $notificationMethod, $url, $recurrence);
@@ -53,7 +61,8 @@ function getTrackedItems($userToken) {
 
 
 /**
- * Function that accepts a series of parameters and adds a new item to the DB
+ * Function that accepts a series of parameters and adds a new item to the DB, returns
+ * information for the item that was just added.
  *
  * @param $userToken - User token created by Google authentication
  * @param $description - Description of what is being tracked
@@ -65,11 +74,13 @@ function addTrackedItem($userToken, $description, $notificationMethod, $url, $re
     global $items;
 
     $newItem = array('userToken' => $userToken, 'description' => $description,
-        'notificationMethod' => $notificationMethod, 'url' => $url, 'recurrence' => $recurrence);
+        'notificationMethod' => $notificationMethod, 'url' => $url, 'recurrence' => $recurrence, 'alert' => false);
     $items->insert($newItem);
 
+    $addedItem = $items->find(array('description' => $description));
+
     echo "\nItem Added: \n";
-    echo json_encode($newItem);
+    echo json_encode(iterator_to_array($addedItem));
 }
 
 
@@ -85,6 +96,57 @@ function removeTrackedItem($itemNum) {
 
     echo "\nItem Removed";
 }
+
+
+/**
+ * Function used to indicate an item has changed and an alert should be signaled.
+ *
+ * @param $itemNum - Unique identifier (primary key) for an individual item
+ * @param $setAlert - boolean value indicating whether the alert flag should be set
+ */
+function itemChanged($itemNum, $setAlert) {
+    global $items;
+
+    $items->update(array('_id' => new MongoId($itemNum)), array('$set' => array('alert' => $setAlert)));
+
+    if (strcmp($setAlert, "true") == 0)
+        echo "\nALERT ACTIVE\n";
+    else
+        echo "\nALERT CLEARED\n";
+}
+
+
+/**
+ * Function to determine whether an item is recurring or a single use. Depending on the outcome,
+ * the item is either removed or its alert flag is cleared.
+ *
+ * @param $itemNum - Unique identifier (primary key) for an individual item
+ */
+function notificationSuccess($itemNum) {
+    global $items;
+
+    $item = $items->findOne(array('_id' => new MongoId($itemNum)));
+    //findOne returns a different type of object which can be used to access elements
+
+    if (strcmp($item['recurrence'], "once") == 0)
+    {
+        removeTrackedItem($itemNum);
+    }
+    else
+    {
+        itemChanged($itemNum, false);
+    }
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
