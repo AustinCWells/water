@@ -5,7 +5,7 @@ html, body {
 body {
   background-position: center center;
   background-repeat: no-repeat;
-  background-image: url("../kimono.jpg");
+  background-image: url("../kimono.png");
   margin: 0;
   background-size:100% 100%;
   padding: 0;
@@ -56,6 +56,7 @@ h2, h5{
 }
 
 .item{
+   -webkit-transition: height .75s ease-in-out;
   position:relative;
   height: 80px;
  box-shadow: 0px 3px 11px 0px rgba(0, 0, 0, 0.26);
@@ -99,4 +100,11 @@ h2, h5{
 }
 .orange{
   background-color: #FF946E;
+}
+.logo{
+  position:absolute;
+  bottom:0px;
+  left:50%;
+  width:100px;
+  margin-left:-50px;
 }
