@@ -55,7 +55,7 @@ function getTrackedItems($userToken) {
 
     $userItems = $items->find(array('userToken' => $userToken));
 
-    echo "\nUser [".$userToken."]:\n";
+//    echo "\nUser [".$userToken."]:\n";
     echo json_encode(iterator_to_array($userItems));
 }
 
@@ -79,7 +79,7 @@ function addTrackedItem($userToken, $description, $notificationMethod, $url, $re
 
     $addedItem = $items->find(array('description' => $description));
 
-    echo "\nItem Added: \n";
+//    echo "\nItem Added: \n";
     echo json_encode(iterator_to_array($addedItem));
 }
 
@@ -94,7 +94,7 @@ function removeTrackedItem($itemNum) {
 
     $items->remove(array('_id' => new MongoId($itemNum)));
 
-    echo "\nItem Removed";
+//    echo "\nItem Removed";
 }
 
 
@@ -109,10 +109,10 @@ function itemChanged($itemNum, $setAlert) {
 
     $items->update(array('_id' => new MongoId($itemNum)), array('$set' => array('alert' => $setAlert)));
 
-    if (strcmp($setAlert, "true") == 0)
-        echo "\nALERT ACTIVE\n";
-    else
-        echo "\nALERT CLEARED\n";
+//    if (strcmp($setAlert, "true") == 0)
+//        echo "\nALERT ACTIVE\n";
+//    else
+//        echo "\nALERT CLEARED\n";
 }
 
 
