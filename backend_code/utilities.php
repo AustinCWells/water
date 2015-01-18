@@ -14,7 +14,7 @@ catch ( MongoConnectionException $e )
 
 // CREATE COLLECTION VARIABLES
 $items = new MongoCollection($db, 'items');     // Items Collection
-$users = new MongoCollection($db, 'users');     // Users Collection
+//$notifications = new MongoCollection($db, 'notifications');     // Users Collection
 
 
 

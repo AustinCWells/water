@@ -25,6 +25,10 @@ else if (POSTAttributesPresent('itemNum', 'setAlert'))
 {
     itemChanged($_POST['itemNum'], $_POST['setAlert']);
 }
+else if (POSTAttributesPresent('itemNum', 'success'))
+{
+    notificationSuccess($_POST['itemNum']);
+}
 else if (POSTAttributesPresent('userToken', 'description', 'notificationMethod', 'url', 'recurrence')) {
     $userToken = $_POST['userToken'];
     $description = $_POST['description'];
@@ -95,6 +99,8 @@ function removeTrackedItem($itemNum) {
 
 
 /**
+ * Function used to indicate an item has changed and an alert should be signaled.
+ *
  * @param $itemNum - Unique identifier (primary key) for an individual item
  * @param $setAlert - boolean value indicating whether the alert flag should be set
  */
@@ -103,13 +109,34 @@ function itemChanged($itemNum, $setAlert) {
 
     $items->update(array('_id' => new MongoId($itemNum)), array('$set' => array('alert' => $setAlert)));
 
-    if ($setAlert === true)
+    if (strcmp($setAlert, "true") == 0)
         echo "\nALERT ACTIVE\n";
     else
         echo "\nALERT CLEARED\n";
 }
 
 
+/**
+ * Function to determine whether an item is recurring or a single use. Depending on the outcome,
+ * the item is either removed or its alert flag is cleared.
+ *
+ * @param $itemNum - Unique identifier (primary key) for an individual item
+ */
+function notificationSuccess($itemNum) {
+    global $items;
+
+    $item = $items->findOne(array('_id' => new MongoId($itemNum)));
+    //findOne returns a different type of object which can be used to access elements
+
+    if (strcmp($item['recurrence'], "once") == 0)
+    {
+        removeTrackedItem($itemNum);
+    }
+    else
+    {
+        itemChanged($itemNum, false);
+    }
+}
 
 
 
