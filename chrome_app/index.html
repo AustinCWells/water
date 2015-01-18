@@ -8,33 +8,23 @@
 </head>
 <body>
     <div class="notification" ng-controller="NotificationsController as notifications">
-        <h2>{{notifications.notification.a}}</h2>
-        <h2>{{notifications.notification.b}}<h2>
-        <h2>{{notifications.notification.c}}<h2>
-    
+        <div ng-repeat="item in notifications.notification">
+        <div class="item" ng-class="item.shouldDisplay">
+            <div class="type brown" ng-if="item.notificationMethod === 'EMAIL'"> <i class="fa fa-envelope fa-3x email"></i> </div>
+            <div class="type orange" ng-if="item.notificationMethod === 'TEXT'"> <i class="fa fa-mobile-phone fa-4x phone" ></i> </div>
+            <div class="type blue" ng-if="item.notificationMethod === 'CHROMENOTIFICATION'"> <i class="fa fa-desktop fa-3x desktop" ></i> </div>
+            <h2> {{item.description}} <span class="trackFrequency">{{item.recurrence}}</span></h2>
+            <h5>{{item.url}}</h5>
 
-    	<div class="item">
-			<div class="type brown"> <i class="fa fa-envelope fa-4x"></i> </div>
-			<h2>Track facebook likes <span class="trackFrequency">once</span></h2>
-			<h5>http://facebook.com</h5>
-			<div class="close"> <i class="fa fa-times-circle fa-2x"></i> </div>
-    	</div>
-    	<div class="item">
-			<div class="type blue"> <i class="fa fa-comment fa-4x"></i>   </div>
-			 <h2>Track google drive document <span class="trackFrequency">recurring</span></h2>
-            <h5>http://googledrive.com/123sndjfn123nj</h5>
-			<div class="close"> <i class="fa fa-times-circle fa-2x"></i>  </div>
-    	</div>
-        <div class="item">
-            <div class="type brown"> <i class="fa fa-envelope fa-4x"></i> </div>
-            <h2>Track facebook likes <span class="trackFrequency">once</span></h2>
-            <h5>http://facebook.com</h5>
-            <div class="close"> <i class="fa fa-times-circle fa-2x"></i> </div>
+            <div class="close" ng-click="myFunction(item._id.$id)"> <i class="fa fa-times-circle fa-2x"></i> </div>
         </div>
+        </div>
+
+    
         <img src="./logo.png" alt="water logo" class="logo">
     </div>
      <script type="text/javascript" src="./scripts/jquery.min.js"></script>
-    <script src="assets/angular.min.js"></script>
+    <script src="./assets/angular.min.js"></script>
      <script type="text/javascript" src="./scripts/app.js"></script>
 </body>
 </html>
