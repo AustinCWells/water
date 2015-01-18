@@ -154,7 +154,7 @@ function notificationSuccess($itemNum) {
 
 
 function sendgridNotification($email, $subject, $text, $html ) {
-    $sendgrid = new SendGrid('skaiser@smu.edu', 'mhackswinners');
+    $sendgrid = new SendGrid('austincwells', 'Choochoo37');
 //    echo $sendgrid;
 
     $email = new SendGrid\Email();
