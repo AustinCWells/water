@@ -67,7 +67,7 @@ function getTrackedItems($userToken) {
     $userItems = $items->find(array('userToken' => $userToken));
 
 //    echo "\nUser [".$userToken."]:\n";
-    echo $_GET['callback'].'('.json_encode(iterator_to_array($userItems)).')';
+    echo json_encode(iterator_to_array($userItems));
 }
 
 
