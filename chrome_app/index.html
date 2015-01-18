@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-ng-app data-ng-csp>
+<html data-ng-app="myapp" data-ng-csp>
 <head>
     <meta charset="utf-8">
     <title>Hello World</title>
@@ -7,7 +7,12 @@
     <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
 </head>
 <body>
-    <div class="notification">
+    <div class="notification" ng-controller="NotificationsController as notifications">
+        <h2>{{notifications.notification.a}}</h2>
+        <h2>{{notifications.notification.b}}<h2>
+        <h2>{{notifications.notification.c}}<h2>
+    
+
     	<div class="item">
 			<div class="type brown"> <i class="fa fa-envelope fa-4x"></i> </div>
 			<h2>Track facebook likes <span class="trackFrequency">once</span></h2>
@@ -28,6 +33,7 @@
         </div>
         <img src="./logo.png" alt="water logo" class="logo">
     </div>
+     <script type="text/javascript" src="./scripts/jquery.min.js"></script>
     <script src="assets/angular.min.js"></script>
      <script type="text/javascript" src="./scripts/app.js"></script>
 </body>

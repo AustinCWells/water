@@ -11,5 +11,13 @@
     "background": {
       "scripts": ["main.js"]
     }
-  }
+  },
+  "sandbox": {
+    "pages": ["index.html"]
+  },
+  "permissions": [
+  "<all_urls>",
+    "https://*/*",
+    "https://104.236.120.63/water/backend_code?userToken=MHacksMagicJankUserToken"
+  ]
 }
