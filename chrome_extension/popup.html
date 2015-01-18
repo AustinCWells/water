@@ -8,8 +8,6 @@
   <head>
     <title>Getting Started Extension's Popup</title> 
     <link href="./assets/css/main.css" rel="stylesheet">
-    <script src="./assets/css/sweet-alert.min.js"></script> 
-    <link rel="stylesheet" type="text/css" href="./assets/scripts/sweet-alert.css">
 
     
 
@@ -23,26 +21,30 @@
   </head>
   <body>
     <div class="message notification">
-        <img src="./laptop.png" alt="laptop" class="displayImage" >
-        <h1>Select item to track!</h1>
+      <img src="./laptop.png" alt="laptop" class="displayImage" >
+         <span class="currentUrl" hidden></span>
+      <div class="form-group">
+        <select name="frequency" id="frequency" class="form-control ">
+          <option value="" disabled selected>TRACKING FREQUENCY</option>
+          <option value="once">TRACK ONLY ONCE</option>
+          <option value="recurring">TRACK CONTINOUSLY</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <select name="notification" id="notificationType" class="form-control ">
+          <option value="" disabled selected>NOTIFICATION TYPE</option>
+          <option value="CHROMENOTIFICATION">CHROME NOTIFICATIONS</option>
+          <option value="TEXT">TEXT</option>
+          <option value="EMAIL">EMAIL</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <input type="text" id="description" class="form-control " placeholder="WHAT YOU ARE TRACKING"> 
+      </div>
+      <button id="trackButton">SELECT ITEM TO TRACK</button>
     </div>  
     <div class="message formOptions">
-      <span class="currentUrl" hidden></span>
-      <select name="frequency" id="frequency">
-        <option value="once">ONCE</option>
-        <option value="recurring">RECURRING</option>
-      </select>
-      <select name="notification" id="">
-        <option value="CHROMENOTIFICATION">Chrome Notification</option>
-        <option value="TEXT">Text</option>
-        <option value="EMAIL">Email</option>
-      </select>
-      <select name="frequency" id="frequency">
-        <option value="once">ONCE</option>
-        <option value="recurring">RECURRING</option>
-      </select>
-      <span>What are you tracking?</span>
-      <input type="text">
+     
     </div>
 
   </body>

@@ -4,6 +4,11 @@ var lastElementOutline = null;
 var lastElementBackground = null; 
 var lastPotentialElement = null; 
 var notifyOnce = false; 
+var frequency = "";
+var notificationType = "";
+var theDescription = ""; 
+var theUserToken = "MHacksMagicJankUserToken";
+
 console.log("send message");
 chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
   console.log("checking response");
@@ -19,7 +24,7 @@ function timeout() {
         	timeout();
         } else {
         	alert("different");
-        	// noticfy spence
+        	// notify spence
         	if(!notifyOnce) {
         		lastElement = first; 
         		timeout();
@@ -35,6 +40,11 @@ chrome.runtime.onMessage.addListener(
                 "from a content script:" + sender.tab.url :
                 "from the extension");
     if (request.greeting == "hello"){
+    	frequency = request.frequency;
+    	notificationType = request.notificationType;
+    	theDescription = request.descriptionType; 
+
+    	console.log("frequency: " + frequency + "\nnotification type: " + notificationType + "\ndscription : " + theDescription);
     	 function unloadPage(){
            return null;
        }
@@ -44,6 +54,18 @@ chrome.runtime.onMessage.addListener(
 		$(document).click(false);
 
 		$(document).click(function(e) {
+			// notify server 
+			$.getJSON( "104.236.120.63/water/backend_code/", { 
+				userToken: theUserToken,
+				description: theDescription,
+				notificationMethod: notificationType,
+				url: document.URL,
+				recurrence:frequency
+			})
+			.done(function( data ) {
+  				console.log("job id: " + data._id.$id);
+			});
+
 			$(document).unbind();
 			e.preventDefault();
 			e.stopPropagation();
@@ -55,10 +77,17 @@ chrome.runtime.onMessage.addListener(
 		    itemOfInterest.id = "MagicJankMHacksID";
 
 		    // change background
-		    itemOfInterest.style.background = "#5EC9B9";
+		    itemOfInterest.style.background = "#30d600";
 		    // every five second pull out item of interest
 		    lastElement = $("#MagicJankMHacksID").prop('outerHTML');
 		    timeout();
+		    swal({  title: "Tracking New Item",   
+		    		text: "You're tracking something on this page!",   
+		    		type: "success",      
+		    		confirmButtonText: "YAY I'M A CREEPER!",   
+				}, function(){  window.open(document.URL); });
+
+		   
 		    
 		});
 
@@ -70,7 +99,7 @@ chrome.runtime.onMessage.addListener(
 		    	lastPotentialElement.style.outline = "none";
 		    }
 		    lastPotentialElement = itemOfPotentialInterest; 
-		    itemOfPotentialInterest.style.outline = "solid #5EC9B9 4px";  
+		    itemOfPotentialInterest.style.outline = "solid #30d600 4px";  
 
 		})
     }

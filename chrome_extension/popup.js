@@ -1,10 +1,18 @@
 
-chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-  chrome.tabs.sendMessage(tabs[0].id, {greeting: "hello"}, function(response) {
-    console.log(response.farewell);
-  });
-});
 
+document.addEventListener('DOMContentLoaded', function(){ 
+  document.getElementById("trackButton").onclick = function(){
+      var frequencyData = document.getElementById("frequency").options[document.getElementById("frequency").selectedIndex].value;
+      var notificationTypeData = document.getElementById("notificationType").options[document.getElementById("notificationType").selectedIndex].value;
+      var descriptionTypeData = document.getElementById("description").value;
+      chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, {greeting: "hello", frequency: frequencyData, notificationType: notificationTypeData, descriptionType: descriptionTypeData}, function(response) {
+        console.log(response.farewell);
+      });
+    });
+    window.close();
+  };
+}, false);
 
 
 // // Copyright (c) 2014 The Chromium Authors. All rights reserved.
