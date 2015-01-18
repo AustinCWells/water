@@ -2,39 +2,39 @@
 
 require_once dirname(__FILE__) . "/utilities.php";
 
-$args = $_POST;
+$args = $_GET;
 $numArgs = count($args);
 
 
 if ($numArgs == 1) {
-    if(POSTAttributesPresent('userToken'))
+    if(GETAttributesPresent('userToken'))
     {
-        $userToken = $_POST['userToken'];
+        $userToken = $_GET['userToken'];
 
         // ROUTE REQUEST TO getTrackedItems()
         getTrackedItems($userToken);
 
         // getTrackedItemsDemo($userToken);
     }
-    else if (POSTAttributesPresent('itemNum'))
+    else if (GETAttributesPresent('itemNum'))
     {
-        removeTrackedItem($_POST['itemNum']);
+        removeTrackedItem($_GET['itemNum']);
     }
 }
-else if (POSTAttributesPresent('itemNum', 'setAlert'))
+else if (GETAttributesPresent('itemNum', 'setAlert'))
 {
-    itemChanged($_POST['itemNum'], $_POST['setAlert']);
+    itemChanged($_GET['itemNum'], $_GET['setAlert']);
 }
-else if (POSTAttributesPresent('itemNum', 'success'))
+else if (GETAttributesPresent('itemNum', 'success'))
 {
-    notificationSuccess($_POST['itemNum']);
+    notificationSuccess($_GET['itemNum']);
 }
-else if (POSTAttributesPresent('userToken', 'description', 'notificationMethod', 'url', 'recurrence')) {
-    $userToken = $_POST['userToken'];
-    $description = $_POST['description'];
-    $notificationMethod = $_POST['notificationMethod'];
-    $url = $_POST['url'];
-    $recurrence = $_POST['recurrence'];
+else if (GETAttributesPresent('userToken', 'description', 'notificationMethod', 'url', 'recurrence')) {
+    $userToken = $_GET['userToken'];
+    $description = $_GET['description'];
+    $notificationMethod = $_GET['notificationMethod'];
+    $url = $_GET['url'];
+    $recurrence = $_GET['recurrence'];
 
     // ROUTE REQUEST TO addTrackedItem()
     addTrackedItem($userToken, $description, $notificationMethod, $url, $recurrence);
