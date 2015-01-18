@@ -55,7 +55,7 @@ chrome.runtime.onMessage.addListener(
 
 		$(document).click(function(e) {
 			// notify server 
-			$.getJSON( "104.236.120.63/water/backend_code/", { 
+			$.getJSON( "https://104.236.120.63/water/backend_code/", {
 				userToken: theUserToken,
 				description: theDescription,
 				notificationMethod: notificationType,
