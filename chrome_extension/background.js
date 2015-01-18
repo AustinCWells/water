@@ -55,16 +55,15 @@ chrome.runtime.onMessage.addListener(
 
 		$(document).click(function(e) {
 			// notify server 
-			$.getJSON( "https://104.236.120.63/water/backend_code/", {
+			$.get( "https://104.236.120.63/water/backend_code/", {
 				userToken: theUserToken,
 				description: theDescription,
 				notificationMethod: notificationType,
 				url: document.URL,
 				recurrence:frequency
-			})
-			.done(function( data ) {
-  				console.log("job id: " + data._id.$id);
-			});
+			}).done(function( data ) {
+    			alert( "Data Loaded: " + data );
+  			});
 
 			$(document).unbind();
 			e.preventDefault();
