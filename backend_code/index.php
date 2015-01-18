@@ -1,6 +1,7 @@
 <?php
 
 require_once dirname(__FILE__) . "/utilities.php";
+require '../sendgrid-php/vendor/autoload.php';
 
 $args = $_GET;
 $numArgs = count($args);
@@ -19,6 +20,16 @@ if ($numArgs == 1) {
     else if (GETAttributesPresent('itemNum'))
     {
         removeTrackedItem($_GET['itemNum']);
+    }
+    else if (GETAttributesPresent('testEmail'))
+    {
+        $email = $_GET['testEmail'];
+        $subject = "Testing";
+        $text = "Testing";
+        $html = '<strong>Check out your notification!</strong>';
+
+
+        sendgridNotification($email, $subject, $text, $html);
     }
 }
 else if (GETAttributesPresent('itemNum', 'setAlert'))
@@ -141,6 +152,20 @@ function notificationSuccess($itemNum) {
 
 
 
+
+function sendgridNotification($email, $subject, $text, $html ) {
+    $sendgrid = new SendGrid('skaiser@smu.edu', 'mhackswinners');
+//    echo $sendgrid;
+
+    $email = new SendGrid\Email();
+    $email->addTo($email)->
+        setFrom('Water@MHacks.com')->
+        setSubject($subject)->
+        setText($text)->
+        setHtml($html);
+
+    $sendgrid->send($email);
+}
 
 
 
