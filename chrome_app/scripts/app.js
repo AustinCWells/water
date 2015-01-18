@@ -1,12 +1,13 @@
 (function(){
 var app = angular.module('myapp', []); 
 var token = "MHacksMagicJankUserToken";
+var notificationData = ""; 
 app.controller('NotificationsController', ['$http', function($http){
 	this.notification = notification; 
 	
 	$http.get('https://104.236.120.63/water/backend_code?userToken=MHacksMagicJankUserToken').
   	success(function(data, status, headers, config) {
-    	console.log(data);
+    	this.notification = data; 
 	  }).
 	  error(function(data, status, headers, config) {
 	  	console.log("error")
