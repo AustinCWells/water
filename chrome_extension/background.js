@@ -3,6 +3,7 @@ var lastElement = null;
 var lastElementOutline = null;
 var lastElementBackground = null; 
 var lastPotentialElement = null; 
+var notifyOnce = false; 
 console.log("send message");
 chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
   console.log("checking response");
@@ -10,17 +11,22 @@ chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
 
 function timeout() {
     setTimeout(function () {
-        var item = $("#MagicJankMHacksID");
-        var first = item.prop('outerHTML');
-        var second = lastElement.prop('outerHTML');
+        var first = $("#MagicJankMHacksID").prop('outerHTML');
+        var second = lastElement;
         console.log("comparing " + first + " ___and__" + second);
-        if(lastElement == item)
-        	alert("same");
-        else
+        if(first === second) {
+        	lastElement = first; 
+        	timeout();
+        } else {
         	alert("different");
-        lastElement = item; 
-        timeout();
-    }, 5000);
+        	// noticfy spence
+        	if(!notifyOnce) {
+        		lastElement = first; 
+        		timeout();
+        	}
+        }
+        
+    }, 1000);
 }
 
 chrome.runtime.onMessage.addListener(
@@ -38,6 +44,7 @@ chrome.runtime.onMessage.addListener(
 		$(document).click(false);
 
 		$(document).click(function(e) {
+			$(document).unbind();
 			e.preventDefault();
 			e.stopPropagation();
 			mouse.x = e.clientX || e.pageX; 
@@ -47,19 +54,10 @@ chrome.runtime.onMessage.addListener(
 		    // add a unique ID 
 		    itemOfInterest.id = "MagicJankMHacksID";
 
-		    
-
-		    if(lastElement){
-		    	lastElement.style.outline = "none";
-		    	lastElement.style.background = lastElementBackground;
-		    }
-		    lastElement = itemOfInterest; 
-		    lastElementOutline = itemOfInterest.style.outline;
-		    itemOfInterest.style.outline = "solid #5EC9B9 4px";
-		    lastElementBackground = itemOfInterest.style.background; 
+		    // change background
 		    itemOfInterest.style.background = "#5EC9B9";
 		    // every five second pull out item of interest
-		    lastElement = $("#MagicJankMHacksID");
+		    lastElement = $("#MagicJankMHacksID").prop('outerHTML');
 		    timeout();
 		    
 		});
